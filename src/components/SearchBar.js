@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import google from 'google-map-react';
 
 export default class SearchBar extends React.Component {
   state = { placeholder: '', onPlacesChanged: undefined };
