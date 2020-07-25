@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { render } from '@testing-library/react';
 
 class App extends Component {
-  componentDidMount(){
-    initMap();
-  }
-  initMap=()=>{
-    let map = new google.maps.Map(document.getElementById("map"))
-  }
+  // componentDidMount(){
+  //   window.gapi.load
+  //   initMap();
+  // }
+  // initMap=()=>{
+  //   let map = new google.maps.Map(document.getElementById("map"))
+  // }
   render() {
     return (
       <div>
