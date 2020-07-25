@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './components/App';
+import GoogleMap from './components/GoogleMap';
 
-ReactDOM.render(<App />, document.querySelector('#root'));
+ReactDOM.render(<GoogleMap />, document.querySelector('#root'));
