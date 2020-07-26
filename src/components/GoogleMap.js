@@ -18,13 +18,13 @@ export default class GoogleMap extends Component {
     return (
       <div>
         <div style={{ height: '100vh', width: '100%' }}>
-        <SearchBar />
+          <SearchBar />
           <GoogleMapReact
-            bootstrapURLKeys={{ key: 'AIzaSyDYoXdx_5cBk9XvTZD1Qj7uA2AXAxiw0oM' }}
+            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API }}
             defaultCenter={center}
             defaultZoom={zoom}
             onClick={this.mapClick}
-            yesIWantToUseGoogleMapApiInternals
+            // yesIWantToUseGoogleMapApiInternals
             // onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
           ></GoogleMapReact>
         </div>

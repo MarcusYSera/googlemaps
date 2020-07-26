@@ -1,24 +1,24 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 
 export default class SearchBar extends React.Component {
   state = { placeholder: '', onPlacesChanged: undefined };
 
-  componentDidMount() {
-    var input = ReactDOM.findDOMNode(this.refs.input);
-    this.searchBar = new google.maps.places.SearchBar(input);
-    this.searchBar.addListener('places_changed', this.onPlacesChanged);
-  }
-  componentWillUnmount() {
-    google.maps.event.clearInstanceListeners(this.searchBar);
-  }
+  // componentDidMount() {
+  //   var input = ReactDOM.findDOMNode(this.refs.input);
+  //   this.searchBar = new google.maps.places.SearchBar(input);
+  //   this.searchBar.addListener('places_changed', this.onPlacesChanged);
+  // }
+  // componentWillUnmount() {
+  //   google.maps.event.clearInstanceListeners(this.searchBar);
+  // }
 
-  onPlacesChanged = () => {
-    const { onPlacesChanged } = this.state;
-    if (onPlacesChanged) {
-      onPlacesChanged(this.searchBar.getPlaces());
-    }
-  };
+  // onPlacesChanged = () => {
+  //   const { onPlacesChanged } = this.state;
+  //   if (onPlacesChanged) {
+  //     onPlacesChanged(this.searchBar.getPlaces());
+  //   }
+  // };
 
   render() {
     return (
