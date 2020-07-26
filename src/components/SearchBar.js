@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import isEmpty from 'lodash.isempty';
 
 // components:
-import Marker from '../components/Marker';
+import Marker from './Marker';
 
 // examples:
-import GoogleMap from '../components/GoogleMap';
-import SearchBox from '../components/SearchBox';
+import GoogleMap from './GoogleMap';
+import SearchBox from './SearchBox';
 
-// consts
-import LOS_ANGELES_CENTER from '../const/la_center';
-
-export default class Searchbox extends Component {
+export default class Searchbar extends Component {
   // constructor(props) {
   //   super(props);
 
@@ -20,6 +17,7 @@ export default class Searchbox extends Component {
     mapInstance: null,
     mapApi: null,
     places: [],
+    center: [35.6762, 139.6503],
   };
   // }
 
@@ -36,7 +34,7 @@ export default class Searchbox extends Component {
   };
 
   render() {
-    const { places, mapApiLoaded, mapInstance, mapApi } = this.state;
+    const { places, mapApiLoaded, mapInstance, mapApi, center } = this.state;
     return (
       <>
         {mapApiLoaded && (
@@ -45,9 +43,9 @@ export default class Searchbox extends Component {
         <div style={{ height: '500px', width: '500px' }}>
           <GoogleMap
             defaultZoom={10}
-            defaultCenter={LOS_ANGELES_CENTER}
+            defaultCenter={center}
             bootstrapURLKeys={{
-              key: process.env.REACT_APP_MAP_KEY,
+              key: process.env.REACT_APP_GOOGLE_API,
               libraries: ['places', 'geometry'],
             }}
             yesIWantToUseGoogleMapApiInternals
