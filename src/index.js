@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import GoogleMap from './components/GoogleMap';
+import SearchBar from './components/SearchBox';
 
-ReactDOM.render(<GoogleMap />, document.querySelector('#root'));
+ReactDOM.render(<SearchBar />, document.querySelector('#root'));

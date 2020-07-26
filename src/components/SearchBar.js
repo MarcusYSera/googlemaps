@@ -1,30 +1,70 @@
-import React from 'react';
-// import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
+import isEmpty from 'lodash.isempty';
 
-export default class SearchBar extends React.Component {
-  state = { placeholder: '', onPlacesChanged: undefined };
+// components:
+import Marker from '../components/Marker';
 
-  // componentDidMount() {
-  //   var input = ReactDOM.findDOMNode(this.refs.input);
-  //   this.searchBar = new google.maps.places.SearchBar(input);
-  //   this.searchBar.addListener('places_changed', this.onPlacesChanged);
+// examples:
+import GoogleMap from '../components/GoogleMap';
+import SearchBox from '../components/SearchBox';
+
+// consts
+import LOS_ANGELES_CENTER from '../const/la_center';
+
+export default class Searchbox extends Component {
+  // constructor(props) {
+  //   super(props);
+
+  state = {
+    mapApiLoaded: false,
+    mapInstance: null,
+    mapApi: null,
+    places: [],
+  };
   // }
-  // componentWillUnmount() {
-  //   google.maps.event.clearInstanceListeners(this.searchBar);
-  // }
 
-  // onPlacesChanged = () => {
-  //   const { onPlacesChanged } = this.state;
-  //   if (onPlacesChanged) {
-  //     onPlacesChanged(this.searchBar.getPlaces());
-  //   }
-  // };
+  apiHasLoaded = (map, maps) => {
+    this.setState({
+      mapApiLoaded: true,
+      mapInstance: map,
+      mapApi: maps,
+    });
+  };
+
+  addPlace = (place) => {
+    this.setState({ places: place });
+  };
 
   render() {
+    const { places, mapApiLoaded, mapInstance, mapApi } = this.state;
     return (
-      <div>
-        <input ref="input" type="text" />
-      </div>
+      <>
+        {mapApiLoaded && (
+          <SearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />
+        )}
+        <div style={{ height: '500px', width: '500px' }}>
+          <GoogleMap
+            defaultZoom={10}
+            defaultCenter={LOS_ANGELES_CENTER}
+            bootstrapURLKeys={{
+              key: process.env.REACT_APP_MAP_KEY,
+              libraries: ['places', 'geometry'],
+            }}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
+          >
+            {!isEmpty(places) &&
+              places.map((place) => (
+                <Marker
+                  key={place.id}
+                  text={place.name}
+                  lat={place.geometry.location.lat()}
+                  lng={place.geometry.location.lng()}
+                />
+              ))}
+          </GoogleMap>
+        </div>
+      </>
     );
   }
 }
