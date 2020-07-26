@@ -1,20 +1,6 @@
 import React, { Component } from 'react';
-// import styled from 'styled-components';
-
-import './searchBox.css';
-// const Wrapper = styled.div`
-//   position: relative;
-//   align-items: center;
-//   justify-content: center;
-//   width: 100%;
-//   padding: 20px;
-// `;
 
 class SearchBox extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.clearSearchBox = this.clearSearchBox.bind(this);
-  // }
 
   componentDidMount({ map, mapApi } = this.props) {
     this.searchBox = new mapApi.places.SearchBox(this.searchInput);

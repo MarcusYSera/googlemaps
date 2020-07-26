@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import isEmpty from 'lodash.isempty';
 
-// components:
-import Marker from './Marker';
-
-// examples:
 import GoogleMap from './GoogleMap';
 import SearchBox from './SearchBox';
+import Marker from './Marker';
 
-export default class Searchbar extends Component {
-  // constructor(props) {
-  //   super(props);
+import './global.css';
 
+export default class App extends Component {
   state = {
     mapApiLoaded: false,
     mapInstance: null,
@@ -19,7 +15,6 @@ export default class Searchbar extends Component {
     places: [],
     center: [35.6762, 139.6503],
   };
-  // }
 
   apiHasLoaded = (map, maps) => {
     this.setState({
@@ -40,7 +35,7 @@ export default class Searchbar extends Component {
         {mapApiLoaded && (
           <SearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />
         )}
-        <div style={{ height: '500px', width: '500px' }}>
+        <div className="googleMap">
           <GoogleMap
             defaultZoom={10}
             defaultCenter={center}

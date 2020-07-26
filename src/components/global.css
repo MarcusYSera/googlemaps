@@ -1,3 +1,16 @@
+.googleMap {
+  height: 500px;
+  width: 500px;
+}
+
+.searchBox {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+}
+
 .marker {
   position: absolute;
   top: 50%;
