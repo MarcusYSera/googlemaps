@@ -15,12 +15,6 @@ export default class App extends Component {
     places: [],
     center: [35.6762, 139.6503],
   };
-  
-  componentDidMount() {
-    fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
-      .then((response) => response.json())
-      .then((data) => this.setState({ places: data.results }));
-  }
 
   apiHasLoaded = (map, maps) => {
     this.setState({
@@ -31,6 +25,7 @@ export default class App extends Component {
   };
 
   addPlace = (place) => {
+    console.log(`added ${JSON.stringify(place[0].geometry.location)}`);
     this.setState({ places: place });
   };
 
