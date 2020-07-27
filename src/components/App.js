@@ -15,6 +15,12 @@ export default class App extends Component {
     places: [],
     center: [35.6762, 139.6503],
   };
+  
+  componentDidMount() {
+    fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
+      .then((response) => response.json())
+      .then((data) => this.setState({ places: data.results }));
+  }
 
   apiHasLoaded = (map, maps) => {
     this.setState({
@@ -26,6 +32,14 @@ export default class App extends Component {
 
   addPlace = (place) => {
     this.setState({ places: place });
+  };
+
+  onChildClickCallback = (key) => {
+    this.setState((state) => {
+      const index = state.places.findIndex((e) => e.id === key);
+      state.places[index].show = !state.places[index].show; // eslint-disable-line no-param-reassign
+      return { places: state.places };
+    });
   };
 
   render() {
@@ -45,14 +59,16 @@ export default class App extends Component {
             }}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
+            onChildClick={this.onChildClickCallback}
           >
             {!isEmpty(places) &&
               places.map((place) => (
                 <Marker
                   key={place.id}
                   text={place.name}
-                  lat={place.geometry.location.lat()}
-                  lng={place.geometry.location.lng()}
+                  lat={place.geometry.location.lat}
+                  lng={place.geometry.location.lng}
+                  place={place}
                 />
               ))}
           </GoogleMap>
