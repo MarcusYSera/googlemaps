@@ -15,12 +15,6 @@ export default class App extends Component {
     places: [],
     center: [35.6762, 139.6503],
   };
-  
-  componentDidMount() {
-    fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
-      .then((response) => response.json())
-      .then((data) => this.setState({ places: data.results }));
-  }
 
   apiHasLoaded = (map, maps) => {
     this.setState({
@@ -31,6 +25,9 @@ export default class App extends Component {
   };
 
   addPlace = (place) => {
+    console.log(`added ${place.length}`);
+    console.log(`added ${JSON.stringify(place[0].geometry.location)}`);
+    // console.log(`added ${JSON.stringify(place[1].geometry.location)}`);
     this.setState({ places: place });
   };
 
@@ -59,15 +56,15 @@ export default class App extends Component {
             }}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
-            onChildClick={this.onChildClickCallback}
+            // onChildClick={this.onChildClickCallback}
           >
             {!isEmpty(places) &&
               places.map((place) => (
                 <Marker
                   key={place.id}
                   text={place.name}
-                  lat={place.geometry.location.lat}
-                  lng={place.geometry.location.lng}
+                  lat={place.geometry.location.lat()}
+                  lng={place.geometry.location.lng()}
                   place={place}
                 />
               ))}
