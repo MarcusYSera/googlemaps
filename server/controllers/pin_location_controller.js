@@ -5,8 +5,9 @@ module.exports = {
     res.send({hi:'there'});
   },
   create(req, res){
-    console.log(req.body);
+    // console.log(req.body);
     const pinLocationProps = req.body;
+    
     PinLocation.create(pinLocationProps)
       .then(pinlocation => res.send(pinlocation));
   },
