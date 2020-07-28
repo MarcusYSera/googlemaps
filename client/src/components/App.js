@@ -5,6 +5,8 @@ import GoogleMap from './GoogleMap';
 import SearchBox from './SearchBox';
 import Marker from './Marker';
 
+// import googleMapDB from '../apis/googleMapDB';
+
 import './global.css';
 
 export default class App extends Component {
@@ -25,10 +27,26 @@ export default class App extends Component {
   };
 
   addPlace = (place) => {
-    console.log(`added ${place.length}`);
+    console.log(`number of places ${place.length}`);
     console.log(`added ${JSON.stringify(place[0].geometry.location)}`);
+    if (place.length > 1) {
+      place.map((p) => {
+        return console.log(
+          `formatted address: ${JSON.stringify(p.formatted_address)}`
+        );
+      });
+    }
     // console.log(`added ${JSON.stringify(place[1].geometry.location)}`);
     this.setState({ places: place });
+    // googleMapDB.post('/api/pinlocation', {
+    //   formatted_address: `${place[0].formatted_address}`
+    // })
+    // .then((res) => {
+    //   console.log(res.status);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
   };
 
   onChildClickCallback = (key) => {
