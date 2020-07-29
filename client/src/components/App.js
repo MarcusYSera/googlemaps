@@ -16,6 +16,7 @@ export default class App extends Component {
     mapApi: null,
     places: [],
     center: [35.6762, 139.6503],
+    zoom: 10,
   };
 
   apiHasLoaded = (map, maps) => {
@@ -26,18 +27,22 @@ export default class App extends Component {
     });
   };
 
+  componentDidMount = () => {};
+
   addPlace = (place) => {
-    console.log(`number of places ${place.length}`);
-    console.log(`added ${JSON.stringify(place[0].geometry.location)}`);
-    if (place.length > 1) {
-      place.map((p) => {
-        return console.log(
-          `formatted address: ${JSON.stringify(p.formatted_address)}`
-        );
-      });
-    }
+    console.log(place);
+    // console.log(`number of places ${place.length}`);
+    // console.log(`added ${JSON.stringify(place[0].geometry.location)}`);
+    // if (place.length > 1) {
+    //   place.map((p) => {
+    //     return console.log(
+    //       `formatted address: ${JSON.stringify(p.formatted_address)}`
+    //     );
+    //   });
+    // }
     // console.log(`added ${JSON.stringify(place[1].geometry.location)}`);
     this.setState({ places: place });
+
     // googleMapDB.post('/api/pinlocation', {
     //   formatted_address: `${place[0].formatted_address}`
     // })
@@ -50,6 +55,7 @@ export default class App extends Component {
   };
 
   onChildClickCallback = (key) => {
+    console.log('onChildClickCallback');
     this.setState((state) => {
       const index = state.places.findIndex((e) => e.id === key);
       state.places[index].show = !state.places[index].show; // eslint-disable-line no-param-reassign
@@ -58,7 +64,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { places, mapApiLoaded, mapInstance, mapApi, center } = this.state;
+    const { places, mapApiLoaded, mapInstance, mapApi, center, zoom } = this.state;
     return (
       <>
         {mapApiLoaded && (
@@ -66,7 +72,7 @@ export default class App extends Component {
         )}
         <div className="googleMap">
           <GoogleMap
-            defaultZoom={10}
+            defaultZoom={zoom}
             defaultCenter={center}
             bootstrapURLKeys={{
               key: process.env.REACT_APP_GOOGLE_API,
@@ -74,7 +80,7 @@ export default class App extends Component {
             }}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
-            // onChildClick={this.onChildClickCallback}
+            onChildClick={this.onChildClickCallback}
           >
             {!isEmpty(places) &&
               places.map((place) => (
@@ -84,6 +90,7 @@ export default class App extends Component {
                   lat={place.geometry.location.lat()}
                   lng={place.geometry.location.lng()}
                   place={place}
+                  show={place.show}
                 />
               ))}
           </GoogleMap>
