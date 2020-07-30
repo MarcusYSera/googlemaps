@@ -5,6 +5,8 @@ import GoogleMap from './GoogleMap';
 import SearchBox from './SearchBox';
 import Marker from './Marker';
 
+// import googleMapDB from '../apis/googleMapDB';
+
 import './global.css';
 
 export default class App extends Component {
@@ -14,6 +16,7 @@ export default class App extends Component {
     mapApi: null,
     places: [],
     center: [35.6762, 139.6503],
+    zoom: 10,
   };
 
   apiHasLoaded = (map, maps) => {
@@ -24,11 +27,31 @@ export default class App extends Component {
     });
   };
 
+  // componentDidMount = () => {};
+
   addPlace = (place) => {
-    console.log(`added ${place.length}`);
-    console.log(`added ${JSON.stringify(place[0].geometry.location)}`);
+    console.log(place);
+    // console.log(`number of places ${place.length}`);
+    // console.log(`added ${JSON.stringify(place[0].geometry.location)}`);
+    // if (place.length > 1) {
+    //   place.map((p) => {
+    //     return console.log(
+    //       `formatted address: ${JSON.stringify(p.formatted_address)}`
+    //     );
+    //   });
+    // }
     // console.log(`added ${JSON.stringify(place[1].geometry.location)}`);
     this.setState({ places: place });
+
+    // googleMapDB.post('/api/pinlocation', {
+    //   formatted_address: `${place[0].formatted_address}`
+    // })
+    // .then((res) => {
+    //   console.log(res.status);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
   };
 
   onChildClickCallback = (key) => {
@@ -40,7 +63,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { places, mapApiLoaded, mapInstance, mapApi, center } = this.state;
+    const { places, mapApiLoaded, mapInstance, mapApi, center, zoom } = this.state;
     return (
       <>
         {mapApiLoaded && (
@@ -48,7 +71,7 @@ export default class App extends Component {
         )}
         <div className="googleMap">
           <GoogleMap
-            defaultZoom={10}
+            defaultZoom={zoom}
             defaultCenter={center}
             bootstrapURLKeys={{
               key: process.env.REACT_APP_GOOGLE_API,
@@ -56,7 +79,7 @@ export default class App extends Component {
             }}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
-            // onChildClick={this.onChildClickCallback}
+            onChildClick={this.onChildClickCallback}
           >
             {!isEmpty(places) &&
               places.map((place) => (
@@ -66,6 +89,7 @@ export default class App extends Component {
                   lat={place.geometry.location.lat()}
                   lng={place.geometry.location.lng()}
                   place={place}
+                  show={place.show}
                 />
               ))}
           </GoogleMap>

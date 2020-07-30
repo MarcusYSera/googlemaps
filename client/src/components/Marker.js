@@ -1,7 +1,18 @@
 import React from 'react';
 
-const Marker = ({ text, onClick }) => {
-  return <div className="marker" alt={text} onClick={onClick} />;
+import MarkerInfoWindow from './MarkerInfoWindow';
+
+const Marker = ({ text, onClick, show, place }) => {
+  return (
+    <div>
+      <div className="marker" style={{ backgroundColor: show ? 'red' : 'blue' }} alt={text} onClick={onClick} />
+      {show && (
+        <MarkerInfoWindow
+          place={place}
+        />
+      )}
+    </div>
+  );
 };
 
 export default Marker;

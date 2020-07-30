@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 class SearchBox extends Component {
-
   componentDidMount({ map, mapApi } = this.props) {
     this.searchBox = new mapApi.places.SearchBox(this.searchInput);
     this.searchBox.addListener('places_changed', this.onPlacesChanged);
@@ -16,7 +15,11 @@ class SearchBox extends Component {
     const selected = this.searchBox.getPlaces();
     const { 0: place } = selected;
     if (!place.geometry) return;
-    if (place.geometry.viewport) {
+    if (selected.length > 1) {
+      map.setCenter(place.geometry.location);
+      map.setZoom(12);
+    } else if (place.geometry.viewport) {
+      console.log('viewport');
       map.fitBounds(place.geometry.viewport);
     } else {
       map.setCenter(place.geometry.location);
