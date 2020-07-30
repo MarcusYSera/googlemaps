@@ -20,8 +20,8 @@ const MarkerInfoWindow = (props) => {
           {String.fromCharCode(9733).repeat(5 - Math.floor(place.rating))}
         </span>
       </div>
-
-      {place.types[0] === 'colloquial_area' ? null : (
+      {place.types[0] === 'colloquial_area' ||
+      place.types[0] === 'locality' ? null : (
         <div style={{ fontSize: 14, color: 'grey' }}>{place.types[0]}</div>
       )}
       <div style={{ fontSize: 14, color: 'grey' }}>

@@ -27,7 +27,7 @@ export default class App extends Component {
     });
   };
 
-  componentDidMount = () => {};
+  // componentDidMount = () => {};
 
   addPlace = (place) => {
     console.log(place);
@@ -55,7 +55,6 @@ export default class App extends Component {
   };
 
   onChildClickCallback = (key) => {
-    console.log('onChildClickCallback');
     this.setState((state) => {
       const index = state.places.findIndex((e) => e.id === key);
       state.places[index].show = !state.places[index].show; // eslint-disable-line no-param-reassign
